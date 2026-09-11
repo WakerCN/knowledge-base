@@ -1,0 +1,8 @@
+node_modules/
+docs/.vitepress/dist/
+.DS_Store
+*.log
+*.tmp
+.agent_context/
+.multica/
+AGENTS.md
