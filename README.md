@@ -12,7 +12,7 @@
 
 ## 本地运行
 
-环境要求：Node.js 20+、npm 10+。
+环境要求：Node.js `20.19.0`、npm `10.8.2`。仓库通过 `.nvmrc` 与 `packageManager` 固定工具链。
 
 ```bash
 npm ci
@@ -29,6 +29,12 @@ npm run docs:preview
 ```
 
 生产构建输出到 `docs/.vitepress/dist`。GitHub Pages 使用 `/knowledge-base/` 作为 base 路径。
+
+切换到指定 Node 版本后再安装依赖：
+
+```bash
+nvm use
+```
 
 ## 内容结构
 

@@ -7,6 +7,8 @@
 > 🕐 生成时间: 2026-09-11 17:15:27
 
 <script setup>
+import { withBase } from 'vitepress'
+
 const categories = [
   {
     title: '前端工程化',
@@ -36,7 +38,7 @@ const categories = [
 ## 内容分类
 
 <div class="category-grid">
-  <a v-for="category in categories" :key="category.title" class="category-card" :href="category.link">
+  <a v-for="category in categories" :key="category.title" class="category-card" :href="withBase(category.link)">
     <span class="card-index">0{{ categories.indexOf(category) + 1 }}</span>
     <h3>{{ category.title }}</h3>
     <p>{{ category.description }}</p>
