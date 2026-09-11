@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: '魏威的知识库',
   description: '前端工程化与小程序开发知识整理',
   lang: 'zh-CN',
@@ -37,4 +38,4 @@ export default defineConfig({
     outline: { level: [2, 3] },
     docFooter: { prev: '上一篇', next: '下一篇' }
   }
-})
+}))
