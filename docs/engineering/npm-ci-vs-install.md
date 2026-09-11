@@ -38,6 +38,29 @@
 
 `^4.17.0` 表示允许满足该范围的版本；`package-lock.json` 记录一次解析后得到的具体依赖树、版本、下载地址和完整性信息。
 
+下面这张图展示了两条命令面对同一份项目文件时，各自如何作出安装决策：
+
+```mermaid
+%%{init: {'flowchart': {'htmlLabels': true, 'padding': 20, 'nodeSpacing': 50, 'rankSpacing': 60, 'curve': 'linear'}}}%%
+flowchart TD
+    S["读取清单与 lock"] --> D{"执行哪条命令？"}
+    D -->|npm install| I1{"lock 满足清单？"}
+    I1 -->|是| I2["沿用锁定依赖树"]
+    I1 -->|否| I3["重新解析并更新 lock"]
+    I2 --> I4["增量对齐安装目录"]
+    I3 --> I4
+    D -->|npm ci| C1{"两者同步？"}
+    C1 -->|否| C2["报错退出"]
+    C1 -->|是| C3["删除安装目录"]
+    C3 --> C4["按 lock 安装"]
+    classDef existing fill:#E8F4FD,stroke:#4A90E2,color:#1a1a1a;
+    classDef changed fill:#F5A623,stroke:#b26a00,color:#1a1a1a;
+    class S,D,I1,I2,I3,I4,C1,C3,C4 existing;
+    class C2 changed;
+```
+
+图中的关键分界是：`npm install` 在 lock 仍满足清单时会沿用锁定依赖树，不满足时才重新解析并更新 lock；`npm ci` 发现两者不同步则直接退出，只有校验成功后才会清理目录并按 lock 安装。
+
 ### `npm install` 不是每次都升级
 
 不带参数执行 `npm install` 时，npm 会先比较 `package.json` 和 lock：
