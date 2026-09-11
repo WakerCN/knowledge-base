@@ -36,6 +36,13 @@ npm run docs:preview
 nvm use
 ```
 
+## 发布与回退
+
+推送到 `main` 会触发 `.github/workflows/deploy.yml`，通过 GitHub Pages 的 workflow source 发布到：
+`https://wakercn.github.io/knowledge-base/`。
+
+需要回退时，优先在目标提交上执行 `git revert <commit>` 并推送到 `main`，让 Pages 工作流重新发布；不要强推历史。若仅需重新发布，可在 GitHub Actions 中重新运行对应的部署工作流。
+
 ## 内容结构
 
 - `docs/engineering/`：前端工程化
