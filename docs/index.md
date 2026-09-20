@@ -27,6 +27,12 @@ const categories = [
     description: '搞清浏览器的安全边界，把报错定位到正确的排查层面。',
     link: '/browser/cors',
     label: 'CORS 跨域'
+  },
+  {
+    title: '服务端',
+    description: '从前端视角看懂服务端的缓存分层，把性能与一致性讲清楚。',
+    link: '/backend/cache-local-vs-distributed',
+    label: '本地缓存与分布式缓存'
   }
 ]
 </script>

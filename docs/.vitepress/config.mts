@@ -3,7 +3,7 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 
 export default withMermaid(defineConfig({
   title: '魏威的知识库',
-  description: '前端工程化、小程序与浏览器网络知识整理',
+  description: '前端工程化、小程序、浏览器网络与服务端知识整理',
   lang: 'zh-CN',
   base: '/knowledge-base/',
   cleanUrls: true,
@@ -14,7 +14,8 @@ export default withMermaid(defineConfig({
       { text: '首页', link: '/' },
       { text: '前端工程化', link: '/engineering/npm-ci-vs-install' },
       { text: '小程序', link: '/miniprogram/cold-hot-start' },
-      { text: '浏览器与网络', link: '/browser/cors' }
+      { text: '浏览器与网络', link: '/browser/cors' },
+      { text: '服务端', link: '/backend/cache-local-vs-distributed' }
     ],
     sidebar: {
       '/engineering/': [
@@ -33,6 +34,12 @@ export default withMermaid(defineConfig({
         {
           text: '浏览器与网络',
           items: [{ text: 'CORS 跨域', link: '/browser/cors' }]
+        }
+      ],
+      '/backend/': [
+        {
+          text: '服务端',
+          items: [{ text: '本地缓存与分布式缓存', link: '/backend/cache-local-vs-distributed' }]
         }
       ]
     },
