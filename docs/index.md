@@ -21,6 +21,12 @@ const categories = [
     description: '从生命周期到启动体验，记录微信小程序的实践要点。',
     link: '/miniprogram/cold-hot-start',
     label: '冷启动与热启动'
+  },
+  {
+    title: '浏览器与网络',
+    description: '搞清浏览器的安全边界，把报错定位到正确的排查层面。',
+    link: '/browser/cors',
+    label: 'CORS 跨域'
   }
 ]
 </script>
@@ -32,7 +38,7 @@ const categories = [
 <div class="hero-panel">
   <span class="eyebrow">WEB ENGINEERING NOTES</span>
   <h2>把经验整理成下一次可以直接使用的答案。</h2>
-  <p>这里收录前端工程化与小程序开发中的概念梳理、代码示例和排查路径。</p>
+  <p>这里收录前端工程化、小程序开发与浏览器网络中的概念梳理、代码示例和排查路径。</p>
 </div>
 
 ## 内容分类
