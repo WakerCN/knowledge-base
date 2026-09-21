@@ -1,13 +1,22 @@
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 
+// 站点部署在 GitHub Pages 的子路径下，图标引用必须带上 base，否则线上 404。
+const base = '/knowledge-base/'
+
 export default withMermaid(defineConfig({
   title: '魏威的知识库',
-  description: '前端工程化、小程序、浏览器网络与服务端知识整理',
+  description: '前端工程化、小程序、浏览器网络、服务端与 AI 工具知识整理',
   lang: 'zh-CN',
-  base: '/knowledge-base/',
+  base,
   cleanUrls: true,
   lastUpdated: true,
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}favicon.svg` }],
+    ['link', { rel: 'alternate icon', type: 'image/x-icon', href: `${base}favicon.ico` }],
+    ['link', { rel: 'apple-touch-icon', href: `${base}apple-touch-icon.png` }],
+    ['meta', { name: 'theme-color', content: '#e35d3f' }]
+  ],
   themeConfig: {
     logo: '/logo.svg',
     nav: [
