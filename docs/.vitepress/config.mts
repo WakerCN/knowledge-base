@@ -15,7 +15,8 @@ export default withMermaid(defineConfig({
       { text: '前端工程化', link: '/engineering/npm-ci-vs-install' },
       { text: '小程序', link: '/miniprogram/cold-hot-start' },
       { text: '浏览器与网络', link: '/browser/cors' },
-      { text: '服务端', link: '/backend/cache-local-vs-distributed' }
+      { text: '服务端', link: '/backend/cache-local-vs-distributed' },
+      { text: 'AI 工具', link: '/ai/pi-coding-agent' }
     ],
     sidebar: {
       '/engineering/': [
@@ -40,6 +41,12 @@ export default withMermaid(defineConfig({
         {
           text: '服务端',
           items: [{ text: '本地缓存与分布式缓存', link: '/backend/cache-local-vs-distributed' }]
+        }
+      ],
+      '/ai/': [
+        {
+          text: 'AI 工具',
+          items: [{ text: 'Pi 编码 agent', link: '/ai/pi-coding-agent' }]
         }
       ]
     },
