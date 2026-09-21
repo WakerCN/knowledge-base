@@ -8,7 +8,9 @@
 
 # 魏威的知识库
 
-基于 VitePress 的个人知识整理站点，记录前端工程化与小程序开发中的可复用知识。
+**🌐 访问地址：<https://wakercn.github.io/knowledge-base/>**
+
+基于 VitePress 的个人知识整理站点，记录前端工程化、小程序、浏览器网络与服务端开发中的可复用知识。
 
 ## 本地运行
 
@@ -47,6 +49,8 @@ nvm use
 
 - `docs/engineering/`：前端工程化
 - `docs/miniprogram/`：微信小程序
+- `docs/browser/`：浏览器与网络
+- `docs/backend/`：服务端
 - `docs/.vitepress/config.mts`：站点配置、导航和侧边栏
 
 ## 写作模板
