@@ -8,6 +8,10 @@
   --vp-c-text-1: #252321;
   --vp-c-text-2: #625d56;
   --vp-font-family-base: 'Avenir Next', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* 滚动条滑块色。浅色底用 brand-1（对 #f8f5ef 对比度 3.27:1）；
+     brand-3 在浅色底上只有 2.53:1，达不到图形元素 3:1 的门槛，所以只用于暗色。 */
+  --kb-scrollbar-thumb: var(--vp-c-brand-1);
 }
 
 .dark {
@@ -16,6 +20,56 @@
   --vp-c-bg-alt: #302d2a;
   --vp-c-text-1: #f8f5ef;
   --vp-c-text-2: #bcb4aa;
+
+  /* 暗色底换 brand-3：在 #1b1a19 上对比度 6.31:1，比 brand-1 的 4.89:1 更醒目。 */
+  --kb-scrollbar-thumb: var(--vp-c-brand-3);
+}
+
+/* ── 滚动条 ──────────────────────────────────────────────────────────
+   两套写法分别覆盖不同浏览器，但**不能直接叠加**：只要元素的 scrollbar-color
+   计算值不是 auto，浏览器就会忽略它的 ::-webkit-scrollbar 系列伪元素
+   （Chrome 149 实测：同时设伪元素 20px，实际仍渲染 11px）。
+   所以先用 @supports 判定：支持标准属性的浏览器由 scrollbar-color 接管，
+   其余旧版 Blink/WebKit 落到下面的伪元素规则。
+
+   宽度取 10px（默认 15px）——更细但不影响点按；轨道透明，避免和米白底割裂。 */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* border + background-clip 是为了在滑块四周留出空隙，
+   做出"细条悬浮"的观感；不这么做滑块会撑满 10px 显得笨重。 */
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 99px;
+  background-color: var(--kb-scrollbar-thumb);
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--vp-c-brand-2);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+@supports (scrollbar-color: auto) {
+  * {
+    scrollbar-color: var(--kb-scrollbar-thumb) transparent;
+    scrollbar-width: thin;
+  }
+
+  /* 这里刻意**不**写 `*::-webkit-scrollbar { width: auto }`。
+     Chrome 149 实测：一旦把伪元素宽度重置为 auto，会连带影响同样命中该规则的
+     场景，使 10px 失效、退化回默认 15px。保留上面的 10px 反而让两条路径
+     （标准属性 11px / 伪元素 10px）粗细接近，观感统一。 */
 }
 
 /* Mermaid 图表统一放在浅色底板上。
