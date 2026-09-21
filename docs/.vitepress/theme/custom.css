@@ -45,9 +45,15 @@
 .hero-panel p { max-width: 650px; margin: 0; color: var(--vp-c-text-2); font-size: 1.05rem; }
 .eyebrow, .card-index { color: var(--vp-c-brand-1); font-size: .75rem; font-weight: 700; letter-spacing: .14em; }
 .category-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.2rem; }
-.category-card { display: block; padding: 1.5rem; border: 1px solid var(--vp-c-divider); border-radius: 14px; color: inherit; text-decoration: none; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
-.category-card:hover { border-color: var(--vp-c-brand-1); background: var(--vp-c-bg-soft); transform: translateY(-3px); }
-.category-card h3 { margin: .8rem 0 .45rem; font-size: 1.35rem; }
+.category-card { display: block; padding: 1.5rem; border: 1px solid var(--vp-c-divider); border-radius: 14px; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+/* .vp-doc a 是 VitePress 自带的链接样式，优先级比单个类名高，会把卡片染成品牌色 + 下划线；
+   而 text-decoration 会透过后代行内盒一路画下去，标题、描述、链接文字全被划上。
+   这里用 .vp-doc .category-card 提高优先级，把卡片恢复成"整块可点、但看着不像链接"。 */
+.vp-doc .category-card { color: inherit; text-decoration: none; }
+.vp-doc .category-card:hover { border-color: var(--vp-c-brand-1); background: var(--vp-c-bg-soft); transform: translateY(-3px); }
+.vp-doc .category-card:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 2px; }
+.category-card h3 { margin: .8rem 0 .45rem; font-size: 1.35rem; color: var(--vp-c-text-1); }
 .category-card p { margin: 0 0 1.2rem; color: var(--vp-c-text-2); line-height: 1.7; }
-.card-link { color: var(--vp-c-brand-1); font-size: .9rem; font-weight: 600; }
+.card-link { display: inline-block; color: var(--vp-c-brand-1); font-size: .9rem; font-weight: 600; transition: transform .2s ease; }
+.category-card:hover .card-link { transform: translateX(3px); }
 @media (max-width: 640px) { .category-grid { grid-template-columns: 1fr; } .hero-panel { margin: 2rem 0 3rem; padding: 1.4rem; } }
