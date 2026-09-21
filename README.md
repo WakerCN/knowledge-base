@@ -51,6 +51,7 @@ nvm use
 - `docs/miniprogram/`：微信小程序
 - `docs/browser/`：浏览器与网络
 - `docs/backend/`：服务端
+- `docs/ai/`：AI 工具
 - `docs/.vitepress/config.mts`：站点配置、导航和侧边栏
 
 ## 写作模板

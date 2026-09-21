@@ -33,6 +33,12 @@ const categories = [
     description: '从前端视角看懂服务端的缓存分层，把性能与一致性讲清楚。',
     link: '/backend/cache-local-vs-distributed',
     label: '本地缓存与分布式缓存'
+  },
+  {
+    title: 'AI 工具',
+    description: '看懂新兴编码 agent 的路线差异，把选型依据讲清楚。',
+    link: '/ai/pi-coding-agent',
+    label: 'Pi 编码 agent'
   }
 ]
 </script>
@@ -44,7 +50,7 @@ const categories = [
 <div class="hero-panel">
   <span class="eyebrow">WEB ENGINEERING NOTES</span>
   <h2>把经验整理成下一次可以直接使用的答案。</h2>
-  <p>这里收录前端工程化、小程序开发与浏览器网络中的概念梳理、代码示例和排查路径。</p>
+  <p>这里收录前端工程化、小程序开发、浏览器网络、服务端与 AI 工具中的概念梳理、代码示例和排查路径。</p>
 </div>
 
 ## 内容分类
