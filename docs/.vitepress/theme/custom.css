@@ -18,6 +18,20 @@
   --vp-c-text-2: #bcb4aa;
 }
 
+/* Mermaid 图表统一放在浅色底板上。
+   图中文字用的是固定的深色墨色（#1A1A1A），而时序图的连线文字、备注没有自带背景块，
+   直接落在深色页面底色上会看不清；给容器一个稳定的浅色底，明暗两种主题下文字对比度都够。 */
+.mermaid {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: #fbf9f4;
+}
+.dark .mermaid { border-color: rgba(255, 255, 255, .14); }
+.mermaid svg { display: block; margin: 0 auto; }
+
 .VPNavBarTitle .title { font-weight: 700; letter-spacing: .02em; }
 .VPHomeHero .name { letter-spacing: -.04em; }
 .hero-panel {
