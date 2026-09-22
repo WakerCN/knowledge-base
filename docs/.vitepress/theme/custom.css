@@ -86,6 +86,141 @@
 .dark .mermaid { border-color: rgba(255, 255, 255, .14); }
 .mermaid svg { display: block; margin: 0 auto; }
 
+/* ── Mermaid 缩放查看器 ──────────────────────────────────────────────
+   外壳 .kb-mermaid 提供定位上下文，按钮与 .mermaid 是兄弟关系：
+   .mermaid 自身是 overflow-x 滚动容器，按钮放进去会被宽图横向带走。
+   边距也从 .mermaid 挪到外壳上，避免两层 margin 叠加。 */
+.kb-mermaid { position: relative; margin: 1.5rem 0; }
+.kb-mermaid .mermaid { margin: 0; }
+
+.kb-mermaid-open {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: color-mix(in srgb, #000 76%, transparent);
+  backdrop-filter: blur(8px);
+  cursor: zoom-in;
+  transition: opacity .15s ease, background .15s ease;
+}
+
+.kb-mermaid-open:hover { background: color-mix(in srgb, #000 90%, transparent); }
+.kb-mermaid-open:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 2px; }
+
+/* 只在真的有 hover 的设备上做「hover 才出现」：触屏没有 hover 状态，
+   藏起来等于图永远打不开。键盘聚焦（focus-visible）同样要能看见。 */
+@media (hover: hover) {
+  .kb-mermaid-open { opacity: 0; }
+  .kb-mermaid:hover .kb-mermaid-open,
+  .kb-mermaid-open:focus-visible { opacity: 1; }
+}
+
+/* 弹窗打开时锁住背景滚动（滚轮已被画布拦住，这里管的是工具条/键盘）。 */
+html.kb-mermaid-lock { overflow: hidden; }
+
+.kb-mermaid-dialog {
+  width: min(calc(100vw - 2rem), 80rem);
+  max-width: none;
+  height: min(90dvh, calc(100dvh - 2rem));
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  overflow: hidden;
+}
+
+/* display 必须用 [open] 限定：dialog 关闭态靠 UA 的 display: none，
+   无条件写 display: flex 会让关闭的弹窗一直显示在页面上。 */
+.kb-mermaid-dialog[open] { display: flex; flex-direction: column; }
+.kb-mermaid-dialog::backdrop { background: rgba(0, 0, 0, .72); }
+
+.kb-mermaid-bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: .25rem;
+  padding: .5rem .75rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+}
+
+.kb-mermaid-bar-title { margin-right: .25rem; font-size: .85rem; font-weight: 600; }
+.kb-mermaid-controls { display: flex; align-items: center; gap: .125rem; }
+
+.kb-mermaid-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  color: var(--vp-c-text-2);
+  background: transparent;
+  font-size: .78rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+
+.kb-mermaid-btn:hover { background: var(--vp-c-bg-alt); color: var(--vp-c-text-1); }
+.kb-mermaid-btn:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 1px; }
+.kb-mermaid-btn:disabled { opacity: .4; pointer-events: none; }
+/* 固定宽度，数字位数变化时工具条不抖。 */
+.kb-mermaid-percent {
+  width: 3rem;
+  text-align: center;
+  font-size: .8rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--vp-c-text-2);
+  user-select: none;
+}
+.kb-mermaid-close { margin-left: auto; }
+
+/* 画布底板固定浅色，和正文里的 .mermaid 一致：图内文字是固定深墨色，
+   落到暗色底上会看不清。 */
+.kb-mermaid-canvas {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  background: #fbf9f4;
+  cursor: grab;
+  /* 接管所有触摸手势，否则浏览器会去滚/缩底下的页面。 */
+  touch-action: none;
+  /* 拖拽平移会触发原生文本选择，把工具条文字和内容盒整块刷成高亮。
+     用 CSS 关掉，而不是 preventDefault pointerdown —— 后者会连带干掉默认聚焦。 */
+  user-select: none;
+  outline: none;
+}
+
+.kb-mermaid-canvas:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: -2px; }
+.kb-mermaid-canvas.is-panning { cursor: grabbing; }
+
+.kb-mermaid-content { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+/* 只有离散操作（按钮 / +/-/0 / 方向键）做缓动；拖拽和滚轮必须 1:1 跟手，
+   缓动会被读成卡顿。 */
+.kb-mermaid-content.is-animated { transition: transform 150ms ease-out; }
+/* 交互由外层画布接管，SVG 里的链接不抢指针事件。 */
+.kb-mermaid-content svg { display: block; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .kb-mermaid-content.is-animated { transition: none; }
+}
+
 .VPNavBarTitle .title { font-weight: 700; letter-spacing: .02em; }
 .VPHomeHero .name { letter-spacing: -.04em; }
 .hero-panel {
